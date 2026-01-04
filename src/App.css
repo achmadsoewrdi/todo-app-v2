@@ -1,1 +1,26 @@
 @import "tailwindcss";
+@theme{
+--color-neon-grass-50: #efffe5;
+--color-neon-grass-100: #e0ffcc;
+--color-neon-grass-200: #c0ff99;
+--color-neon-grass-300: #a1ff66;
+--color-neon-grass-400: #81ff33;
+--color-neon-grass-500: #62ff00;
+--color-neon-grass-600: #4ecc00;
+--color-neon-grass-700: #3b9900;
+--color-neon-grass-800: #276600;
+--color-neon-grass-900: #143300;
+--color-neon-grass-950: #0e2400;
+}
+
+/* ✅ Tambahkan ini untuk checkbox accent color */
+input[type="checkbox"] {
+  accent-color: #4ecc00; /* neon-grass-600 */
+}
+
+/* Optional: Untuk semua input yang bisa pakai accent-color */
+input[type="radio"],
+input[type="checkbox"],
+input[type="range"] {
+  accent-color: #4ecc00;
+}
