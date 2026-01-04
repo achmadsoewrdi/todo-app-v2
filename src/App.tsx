@@ -4,7 +4,13 @@ import { StatusBadge, PriorityBadge } from "@/components/ui/Badge";
 import type { TodoStatus, TodoPriority } from "@/components/ui/Badge";
 import { Input } from "@/components/ui/Input/Input";
 import { Checkbox } from "./components/ui/Checkbox/Checkbox";
-import { Card,CardHeader, CardBody, CardFooter } from "./components/ui/Card/Card.types";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+} from "./components/ui/Card/Card.types";
+import { Select } from "./components/ui/Select/Select";
 
 // Definisikan interface untuk Todo
 interface Todo {
@@ -77,6 +83,12 @@ function App() {
             <Button variant="primary">Action</Button>
           </CardFooter>
         </Card>
+
+        <Select
+          label="Priority"
+          options={["High", "Medium", "Low"]}
+          placeholder="Select priority"
+        />
       </div>
     </div>
   );
