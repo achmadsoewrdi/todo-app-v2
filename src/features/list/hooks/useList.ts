@@ -1,38 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/lib/supabase';
-import { useAuth } from '@/features/auth';
-
-interface List {
-  id: string;
-  name: string;
-  color: string;
-  icon?: string;
-  count?: number;
-}
+import { useContext } from 'react';
+import { ListsContext } from '../context/ListsContext';
 
 export function useLists() {
-  const { user } = useAuth();
-  const [lists, setLists] = useState<List[]>([]);
+  const context = useContext(ListsContext);
 
-  const fetchLists = useCallback(async () => {
-    if (!user) return;
+  if (!context) {
+    throw new Error('useLists must be used within ListsProvider');
+  }
 
-    const { data, error } = await supabase
-      .from('lists')
-      .select('*, todos(count)')
-      .eq('user_id', user.id);
-
-    if (error) {
-      console.error('Error fetching lists:', error);
-      return;
-    }
-
-    setLists(data || []);
-  }, [user]);
-
-  useEffect(() => {
-    fetchLists();
-  }, [fetchLists]);
-
-  return { lists, refetch: fetchLists };
+  return context;
 }

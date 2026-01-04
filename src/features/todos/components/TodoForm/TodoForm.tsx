@@ -4,6 +4,7 @@ import { TextArea } from '@/components/ui/TextArea/TextArea';
 import { Select } from '@/components/ui/Select/Select';
 import { Button } from '@/components/ui/Button/Button';
 import { useTodos } from '@/features/todos/hooks/useTodos';
+import { useLists } from '@/features/list'; // ✅ Import useLists
 import type { Database } from '@/types/database.types';
 
 type TodoInsert = Database['public']['Tables']['todos']['Insert'];
@@ -15,6 +16,7 @@ interface TodoFormProps {
 
 export function TodoForm({ onSuccess, onCancel }: TodoFormProps) {
   const { createTodo } = useTodos();
+  const { lists } = useLists(); // ✅ Get lists
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -24,6 +26,7 @@ export function TodoForm({ onSuccess, onCancel }: TodoFormProps) {
     status: 'not-started',
     priority: 'medium',
     due_date: '',
+    list_id: '', // ✅ Add list_id
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,6 +41,7 @@ export function TodoForm({ onSuccess, onCancel }: TodoFormProps) {
         status: formData.status,
         priority: formData.priority,
         due_date: formData.due_date || null,
+        list_id: formData.list_id || null, // ✅ Include list_id
         is_completed: false,
       };
 
@@ -73,6 +77,20 @@ export function TodoForm({ onSuccess, onCancel }: TodoFormProps) {
         value={formData.description}
         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
         helperText="Provide context and details for this task"
+      />
+
+      {/* ✅ List Selector */}
+      <Select
+        label="List (Optional)"
+        options={[
+          { value: '', label: 'No List' },
+          ...lists.map((list) => ({
+            value: list.id,
+            label: list.name,
+          })),
+        ]}
+        value={formData.list_id}
+        onChange={(e) => setFormData({ ...formData, list_id: e.target.value })}
       />
 
       <div className="grid grid-cols-2 gap-4">
